@@ -1,0 +1,9 @@
+{
+    "workbench.editor.closeOnFileDelete": true,
+    "editor.roundedSelection": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "prettier.tabWidth": 4,
+    "prettier.jsxSingleQuote": true,
+    "prettier.singleQuote": true,
+    "prettier.useTabs": true
+}
