@@ -8,6 +8,8 @@ import Input from '../../../components/UI/Input/Input';
 
 import classes from './ContactData.module.css';
 
+import { connect } from 'react-redux';
+
 class ContactData extends Component {
 	state = {
 		orderForm: {
@@ -19,10 +21,10 @@ class ContactData extends Component {
 				},
 				value: '',
 				validation: {
-					required: true
+					required: true,
 				},
 				valid: false,
-				touched: false
+				touched: false,
 			},
 			street: {
 				elementType: 'input',
@@ -32,10 +34,10 @@ class ContactData extends Component {
 				},
 				value: '',
 				validation: {
-					required: true
+					required: true,
 				},
 				valid: false,
-				touched: false
+				touched: false,
 			},
 			zipCode: {
 				elementType: 'input',
@@ -47,10 +49,10 @@ class ContactData extends Component {
 				validation: {
 					required: true,
 					minLength: 5,
-					maxLength: 6
+					maxLength: 6,
 				},
 				valid: false,
-				touched: false
+				touched: false,
 			},
 			country: {
 				elementType: 'input',
@@ -60,10 +62,10 @@ class ContactData extends Component {
 				},
 				value: '',
 				validation: {
-					required: true
+					required: true,
 				},
 				valid: false,
-				touched: false
+				touched: false,
 			},
 			email: {
 				elementType: 'input',
@@ -73,10 +75,10 @@ class ContactData extends Component {
 				},
 				value: '',
 				validation: {
-					required: true
+					required: true,
 				},
 				valid: false,
-				touched: false
+				touched: false,
 			},
 			deliveryMethod: {
 				elementType: 'select',
@@ -88,7 +90,7 @@ class ContactData extends Component {
 				},
 				value: 'fastest',
 				validation: {},
-				valid: true
+				valid: true,
 			},
 		},
 		formIsValid: false,
@@ -106,11 +108,10 @@ class ContactData extends Component {
 			].value;
 		}
 
-
 		const order = {
-			ingredients: this.props.ingredients,
+			ingredients: this.props.ings,
 			price: this.props.price,
-			orderData: formData
+			orderData: formData,
 		};
 
 		axios
@@ -140,7 +141,7 @@ class ContactData extends Component {
 		}
 
 		return isValid;
-	}
+	};
 
 	inputChangedHandler = (event, inputIdentifier) => {
 		const updatedOrderForm = {
@@ -150,16 +151,23 @@ class ContactData extends Component {
 		const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
 
 		updatedFormElement.value = event.target.value;
-		updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+		updatedFormElement.valid = this.checkValidity(
+			updatedFormElement.value,
+			updatedFormElement.validation
+		);
 		updatedOrderForm[inputIdentifier] = updatedFormElement;
 		updatedFormElement.touched = true;
 
 		let formIsValid = true;
 		for (let inputIdentifier in updatedOrderForm) {
-			formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;	
+			formIsValid =
+				updatedOrderForm[inputIdentifier].valid && formIsValid;
 		}
 		console.log(formIsValid);
-		this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+		this.setState({
+			orderForm: updatedOrderForm,
+			formIsValid: formIsValid,
+		});
 	};
 
 	render() {
@@ -181,14 +189,16 @@ class ContactData extends Component {
 						key={formElement.id}
 						elementType={formElement.config.elementType}
 						elementConfig={formElement.config.elementConfig}
-						invalid = {!formElement.config.valid}
-						shouldValidate = {formElement.config.validation}
-						touched = {formElement.config.touched}
+						invalid={!formElement.config.valid}
+						shouldValidate={formElement.config.validation}
+						touched={formElement.config.touched}
 						value={formElement.config.value}
 					/>
 				))}
 
-				<Button btnType='Success' disabled = {!this.state.formIsValid}>Order</Button>
+				<Button btnType='Success' disabled={!this.state.formIsValid}>
+					Order
+				</Button>
 			</form>
 		);
 
@@ -205,4 +215,11 @@ class ContactData extends Component {
 	}
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+	return {
+		ings: state.ingredients,
+		price: state.totalPrice,
+	};
+};
+
+export default connect(mapStateToProps)(ContactData);
