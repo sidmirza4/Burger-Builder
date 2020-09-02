@@ -13,8 +13,9 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-import * as actionTypes from '../../store/actions';
 import { connect } from 'react-redux';
+
+import * as burgerBuilderActions from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
 	// constructor(props){
@@ -95,21 +96,21 @@ class BurgerBuilder extends Component {
 	};
 
 	purchaseContinueHandler = () => {
-	// 	const queryParams = [];
-	// 	for (let i in this.state.ingredients) {
-	// 		queryParams.push(
-	// 			encodeURIComponent(i) +
-	// 				'=' +
-	// 				encodeURIComponent(this.state.ingredients[i])
-	// 		);
-	// 	}
+		// 	const queryParams = [];
+		// 	for (let i in this.state.ingredients) {
+		// 		queryParams.push(
+		// 			encodeURIComponent(i) +
+		// 				'=' +
+		// 				encodeURIComponent(this.state.ingredients[i])
+		// 		);
+		// 	}
 
-	// 	queryParams.push(`price=${this.props.price}`);
-	// 	const queryString = queryParams.join('&');
-	// 	this.props.history.push({
-	// 		pathname: '/checkout',
-	// 		search: '?' + queryString,
-	// 	});
+		// 	queryParams.push(`price=${this.props.price}`);
+		// 	const queryString = queryParams.join('&');
+		// 	this.props.history.push({
+		// 		pathname: '/checkout',
+		// 		search: '?' + queryString,
+		// 	});
 
 		this.props.history.push('/checkout');
 	};
@@ -183,15 +184,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onIngredientAdded: (ingName) =>
-			dispatch({
-				type: actionTypes.ADD_INGREDIENT,
-				ingredientName: ingName,
-			}),
+			dispatch(burgerBuilderActions.addIngredient(ingName)),
 		onIngredientRemove: (ingName) =>
-			dispatch({
-				type: actionTypes.REMOVE_INGREDIENT,
-				ingredientName: ingName,
-			}),
+			dispatch(burgerBuilderActions.removeIngredient(ingName))
 	};
 };
 
