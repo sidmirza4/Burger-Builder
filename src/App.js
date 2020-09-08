@@ -20,7 +20,7 @@ class App extends Component {
 			<Switch>
 				<Route path='/auth' component={Auth} />
 				<Route path='/' exact component={BurgerBuilder} />
-				<Redirect to = "/" />
+				<Redirect to='/' />
 			</Switch>
 		);
 
@@ -38,21 +38,19 @@ class App extends Component {
 
 		return (
 			<div>
-				<Layout>
-					{routes}
-				</Layout>
+				<Layout>{routes}</Layout>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
-		isAuthenticated: state.auth.token !== null
+		isAuthenticated: state.auth.token !== null,
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		onTryAutoSignup: () => dispatch(actions.authCheckState()),
 	};
