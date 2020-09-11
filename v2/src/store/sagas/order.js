@@ -17,3 +17,22 @@ export function* purchaseBurgerSaga(action) {
 		yield put(actions.purchaseBurgerFail(err));
 	}
 }
+
+export function* fetchOrdersSaga(action) {
+	put(actions.fetchOrdersStart());
+	const queryParams = `?auth=${action.token}&orderBy=userId&equalTo=${action.userId}`;
+
+	try {
+		const res = yield axios.get(`/orders.json?auth=${queryParams}`);
+		const fetchedOrders = [];
+		for (let key in res.data) {
+			fetchedOrders.push({
+				...res.data[key],
+				id: key,
+			});
+		}
+		put(actions.fetchOrdersSuccess(fetchedOrders));
+	} catch (err) {
+		put(actions.fetchOrdersFail(err));
+	}
+}
