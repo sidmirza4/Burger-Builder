@@ -15,10 +15,12 @@ import authReducer from "./store/reducers/auth";
 // import { logoutSaga } from "./store/sagas/auth";
 import { watchAuth } from "./store/sagas/index";
 
-const composeEnhancers =
-	process.env.NODE_ENV === "development"
-		? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-		: null || compose;
+// const composeEnhancers =
+// 	process.env.NODE_ENV === "development"
+// 		? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+// 		: null || compose;
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
 	burgerBuilder: burgerBuilderReducer,
